@@ -44,7 +44,6 @@ trait ModuleTrait
 
     final public function __call($name, $arguments)
     {
-        var_dump(static::$moduleName);
         throw new InvalidCommandException(
             sprintf('%s::%s is not a valid method', static::$moduleName, $name)
         );
