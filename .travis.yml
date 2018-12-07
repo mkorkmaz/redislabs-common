@@ -5,7 +5,7 @@ services:
 php:
   - 7.2
 before_script:
-  - docker run -p 6379:6379 --name redis-rejson redislabs/rejson:latest
+  - docker run -d -p 6379:6379 --name redis-rejson redislabs/rejson:latest
   - composer install -n
 script:
   - vendor/bin/codecept run unit --coverage --coverage-xml
