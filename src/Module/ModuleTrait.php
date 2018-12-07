@@ -36,10 +36,12 @@ trait ModuleTrait
 
     final public function runCommand(CommandInterface $command)
     {
-        return $this->redisClient->rawCommand(
+        $response = $this->redisClient->rawCommand(
             $command->getCommand(),
             $command->getArguments()
         );
+        $callback = $command->getResponseCallback();
+        return $callback ? $callback($response) : $response;
     }
 
     final public function __call($name, $arguments)

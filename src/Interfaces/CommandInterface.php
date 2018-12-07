@@ -7,4 +7,5 @@ interface CommandInterface
 {
     public function getCommand() : string;
     public function getArguments() : array;
+    public function getResponseCallback() : ?callable;
 }
