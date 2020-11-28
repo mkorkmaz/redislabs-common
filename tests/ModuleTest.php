@@ -63,8 +63,7 @@ class ModuleTest extends \Codeception\Test\Unit
          * @var Module
          */
         $module = Module::createWithPredis($redisClient);
-        $this->assertThrows(InvalidCommandException::class, function () use ($module) {
-            $module->invalidMethod('test');
-        });
+        $this->expectException(InvalidCommandException::class);
+        $module->invalidMethod('test');
     }
 }
