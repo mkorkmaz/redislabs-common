@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Redislabs\RedisClient;
@@ -15,7 +16,7 @@ final class Predis implements RedisClientInterface
         $this->redisClient = $redisClient;
     }
 
-    public function getClient() : RedisClient
+    public function getClient(): RedisClient
     {
         return $this->redisClient;
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Redislabs\Command;
@@ -19,7 +20,7 @@ abstract class CommandAbstract
         return $this->arguments;
     }
 
-    final public function getResponseCallback() : ?callable
+    final public function getResponseCallback(): ?callable
     {
         return $this->responseCallback;
     }

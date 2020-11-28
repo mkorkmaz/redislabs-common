@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Redislabs\Module;
@@ -20,14 +21,14 @@ trait ModuleTrait
         $this->redisClient = $redisClient;
     }
 
-    final public static function createWithPredis(PredisClient $predisClient) : self
+    final public static function createWithPredis(PredisClient $predisClient): self
     {
         return new static(
             new RedislabsPredisClient($predisClient)
         );
     }
 
-    final public static function createWithPhpRedis(PhpRedisClient $predisClient) : self
+    final public static function createWithPhpRedis(PhpRedisClient $predisClient): self
     {
         return new static(
             new RedislabsPhpRedisClient($predisClient)

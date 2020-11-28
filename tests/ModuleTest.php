@@ -1,35 +1,29 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RedislabsModulesTest;
 
+use Codeception\AssertThrows;
+use Redislabs\Exceptions\InvalidCommandException;
 use Redislabs\Test\Command;
 use Redislabs\Test\Module;
-
 use Redis;
 use Predis;
 
 class ModuleTest extends \Codeception\Test\Unit
 {
+    use AssertThrows;
+
     /**
      * @var \RedislabsModulesTest\UnitTester
      */
     protected $tester;
 
-
-    protected function _before()
-    {
-    }
-
-    protected function _after()
-    {
-    }
-
-
     /**
      * @test
      */
-    public function shouldRunCommandOriginalRedisClientsCommandSuccessfully() : void
+    public function shouldRunCommandOriginalRedisClientsCommandSuccessfully(): void
     {
         $redisClient = new Redis();
         $redisClient->connect('127.0.0.1');
@@ -46,7 +40,7 @@ class ModuleTest extends \Codeception\Test\Unit
     /**
      * @test
      */
-    public function shouldRunCommandOriginalPredisClientsCommandSuccessfully() : void
+    public function shouldRunCommandOriginalPredisClientsCommandSuccessfully(): void
     {
         $redisClient = new Predis\Client();
         /**
@@ -61,15 +55,16 @@ class ModuleTest extends \Codeception\Test\Unit
 
     /**
      * @test
-     * @expectedException \Redislabs\Exceptions\InvalidCommandException
      */
-    public function shouldFailForMagicMethodCall() : void
+    public function shouldFailForMagicMethodCall(): void
     {
         $redisClient = new Predis\Client();
         /**
          * @var Module
          */
         $module = Module::createWithPredis($redisClient);
-        $module->invalidMethod('test');
+        $this->assertThrows(InvalidCommandException::class, function () use ($module) {
+            $module->invalidMethod('test');
+        });
     }
 }
