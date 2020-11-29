@@ -6,11 +6,13 @@ php:
   - 7.3
   - 7.4
   - nightly
-before_install: echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+before_install:
+  - pecl install redis <<< ''
 before_script:
   - docker run -d -p 6379:6379 --name redis-modules redislabs/redismod:latest
   - composer install -n
 script:
+  - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - vendor/bin/codecept run unit --coverage --coverage-xml
 after_script:
   - if [ $TRAVIS_PHP_VERSION = '7.4' ]; then php vendor/bin/php-coveralls; fi
