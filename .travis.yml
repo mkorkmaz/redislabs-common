@@ -7,7 +7,7 @@ php:
   - 7.4
   - nightly
 before_install:
-  - pecl install redis <<< ''
+  - pecl install -f redis <<< ''
 before_script:
   - docker run -d -p 6379:6379 --name redis-modules redislabs/redismod:latest
   - composer install -n
