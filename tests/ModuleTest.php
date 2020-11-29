@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace RedislabsModulesTest;
 
-use Codeception\AssertThrows;
 use Redislabs\Exceptions\InvalidCommandException;
 use Redislabs\Test\Command;
 use Redislabs\Test\Module;
@@ -13,7 +12,6 @@ use Predis;
 
 class ModuleTest extends \Codeception\Test\Unit
 {
-    use AssertThrows;
 
     /**
      * @var \RedislabsModulesTest\UnitTester
