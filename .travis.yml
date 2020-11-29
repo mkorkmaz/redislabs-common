@@ -13,7 +13,7 @@ before_script:
   - composer install -n
 script:
   - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - export XDEBUG_MODE=debug
+  - export XDEBUG_MODE=coverage
   - vendor/bin/codecept run unit --coverage --coverage-xml
 after_script:
   - if [ $TRAVIS_PHP_VERSION = '7.4' ]; then php vendor/bin/php-coveralls; fi
