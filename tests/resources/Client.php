@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Redislabs\Test;
@@ -18,12 +19,12 @@ final class Client
         $this->redisClient = $redisClient;
     }
 
-    public static function createWithPredis(PredisClient $predisClient) : self
+    public static function createWithPredis(PredisClient $predisClient): self
     {
         return new self(new RedislabsPredisClient($predisClient));
     }
 
-    public static function createWithPhpRedis(PhpRedisClient $predisClient) : self
+    public static function createWithPhpRedis(PhpRedisClient $predisClient): self
     {
         return new self(new RedislabsPhpRedisClient($predisClient));
     }

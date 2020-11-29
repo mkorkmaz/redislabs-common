@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RedislabsModulesTest;
@@ -12,20 +13,10 @@ class CommandTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-
-    protected function _before()
-    {
-    }
-
-    protected function _after()
-    {
-    }
-
-
     /**
      * @test
      */
-    public function shouldGetReturnCommandAndArgumentsSuccessfully() : void
+    public function shouldGetReturnCommandAndArgumentsSuccessfully(): void
     {
         $command = new Command('param1', 'param2');
         $this->assertEquals('SET', $command->getCommand());

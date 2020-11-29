@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RedislabsModulesTest;
@@ -14,20 +15,10 @@ class ClientTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-
-    protected function _before()
-    {
-    }
-
-    protected function _after()
-    {
-    }
-
-
     /**
      * @test
      */
-    public function shouldRunCommandOriginalRedisClientsCommandSuccessfully() : void
+    public function shouldRunCommandOriginalRedisClientsCommandSuccessfully(): void
     {
         $redisClient = new Redis();
         $redisClient->connect('127.0.0.1');
@@ -47,7 +38,7 @@ class ClientTest extends \Codeception\Test\Unit
     /**
      * @test
      */
-    public function shouldRunCommandOriginalPredisClientsCommandSuccessfully() : void
+    public function shouldRunCommandOriginalPredisClientsCommandSuccessfully(): void
     {
         /**
          * @var Client
