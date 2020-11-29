@@ -3,7 +3,9 @@ sudo: false
 services:
   - docker
 php:
-  - 7.2
+  - 7.3
+  - 7.4
+  - nightly
 before_install: echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 before_script:
   - docker run -d -p 6379:6379 --name redis-modules redislabs/redismod:latest
@@ -11,7 +13,7 @@ before_script:
 script:
   - vendor/bin/codecept run unit --coverage --coverage-xml
 after_script:
-  - if [ $TRAVIS_PHP_VERSION = '7.2' ]; then php vendor/bin/php-coveralls; fi
+  - if [ $TRAVIS_PHP_VERSION = '7.4' ]; then php vendor/bin/php-coveralls; fi
 after_success:
   - travis_retry php vendor/bin/php-coveralls -v
   - vendor/bin/test-reporter
