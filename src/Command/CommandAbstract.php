@@ -24,4 +24,12 @@ abstract class CommandAbstract
     {
         return $this->responseCallback;
     }
+
+    final public static function jsonDecode(?string $jsonData)
+    {
+        if ($jsonData === null) {
+            return null;
+        }
+        return json_decode($jsonData, JSON_OBJECT_AS_ARRAY, 512, JSON_THROW_ON_ERROR);
+    }
 }
