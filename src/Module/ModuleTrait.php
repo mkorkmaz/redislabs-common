@@ -35,6 +35,11 @@ trait ModuleTrait
         );
     }
 
+    final public function getClient()
+    {
+        $this->redisClient->getClient();
+    }
+
     final public function runCommand(CommandInterface $command)
     {
         $response = $this->redisClient->rawCommand(
