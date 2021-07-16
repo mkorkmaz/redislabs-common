@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Redislabs\RedisClient;
 
 use Redislabs\Interfaces\RedisClientInterface;
-use Predis\Client as RedisClient;
+use Predis\ClientInterface as RedisClient;
 
 final class Predis implements RedisClientInterface
 {

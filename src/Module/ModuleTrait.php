@@ -35,9 +35,14 @@ trait ModuleTrait
         );
     }
 
-    final public function getClient()
+    public function getClient(): object
     {
-        $this->redisClient->getClient();
+        return $this->redisClient->getClient();
+    }
+
+    public function raw($command, ...$arguments)
+    {
+        return $this->redisClient->rawCommand($command, $arguments);
     }
 
     final public function runCommand(CommandInterface $command)
@@ -50,10 +55,22 @@ trait ModuleTrait
         return $callback ? $callback($response) : $response;
     }
 
-    final public function __call($name, $arguments)
+    /**
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     * Using this magic method enables this library to extend redis clients
+     * to use redislabs modules
+     */
+    public function __call(string $name, array $arguments)
     {
-        throw new InvalidCommandException(
-            sprintf('%s::%s is not a valid method', static::$moduleName, $name)
-        );
+        $redisClient = $this->redisClient->getClient();
+        try {
+            return call_user_func_array([$redisClient, $name], $arguments);
+        } catch (\Throwable $exception) {
+            throw new InvalidCommandException(
+                sprintf('%s::%s is not a valid method', static::$moduleName, $name)
+            );
+        }
     }
 }

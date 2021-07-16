@@ -10,9 +10,7 @@ use Predis;
 
 class ClientTest extends \Codeception\Test\Unit
 {
-    /**
-     * @var \RedislabsModulesTest\UnitTester
-     */
+
     protected $tester;
 
     /**
@@ -27,6 +25,8 @@ class ClientTest extends \Codeception\Test\Unit
          * @var Client
          */
         $redisLabsClient = Client::createWithPhpRedis($redisClient);
+        $redisClient = $redisLabsClient->getClient();
+        $this->assertSame(Redis::class, get_class($redisClient));
         $redisLabsClient->set('foo', 1);
         $this->assertEquals(1, $redisLabsClient->get('foo'), 'Ext-redis client runs its native functions');
         $redisLabsClient->del('foo');
@@ -44,9 +44,9 @@ class ClientTest extends \Codeception\Test\Unit
          * @var Client
          */
         $redisLabsClient = Client::createWithPredis(new Predis\Client());
-        $redisLabsClient->set('foo', 'bar');
-        $this->assertEquals('bar', $redisLabsClient->get('foo'), 'Predis client runs its native functions');
-        $redisLabsClient->del('foo');
+          $redisLabsClient->raw('set', 'foo', 'bar');
+        $this->assertEquals('bar', $redisLabsClient->raw('get', 'foo'), 'Predis client runs its native functions');
+        $redisLabsClient->raw('get', 'foo');
         $redisLabsClient->raw('SET', 'FOO', 'BAR');
         $fooValue = $redisLabsClient->raw('GET', 'FOO');
         $this->assertEquals('BAR', $fooValue);
