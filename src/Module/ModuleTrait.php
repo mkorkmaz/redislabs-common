@@ -7,7 +7,7 @@ namespace Redislabs\Module;
 use Redislabs\Exceptions\InvalidCommandException;
 use Redislabs\Interfaces\CommandInterface;
 use Redislabs\Interfaces\RedisClientInterface;
-use Predis\Client as PredisClient;
+use Predis\ClientInterface as PredisClient;
 use Redis as PhpRedisClient;
 use Redislabs\RedisClient\Predis as RedislabsPredisClient;
 use Redislabs\RedisClient\Redis as RedislabsPhpRedisClient;
