@@ -1,3 +1,4 @@
 vendor/
+tests/_support/_generated
 .DS_Store
 *.lock
