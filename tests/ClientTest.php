@@ -26,7 +26,7 @@ class ClientTest extends \Codeception\Test\Unit
          */
         $redisLabsClient = Client::createWithPhpRedis($redisClient);
         $redisClient = $redisLabsClient->getClient();
-        $this->assertSame(Redis::class, get_class($redisClient));
+        $this->assertSame(Redis::class, $redisClient::class);
         $redisLabsClient->set('foo', 1);
         $this->assertEquals(1, $redisLabsClient->get('foo'), 'Ext-redis client runs its native functions');
         $redisLabsClient->del('foo');

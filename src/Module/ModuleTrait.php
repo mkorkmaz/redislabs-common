@@ -67,7 +67,7 @@ trait ModuleTrait
         $redisClient = $this->redisClient->getClient();
         try {
             return call_user_func_array([$redisClient, $name], $arguments);
-        } catch (\Throwable $exception) {
+        } catch (\Throwable) {
             throw new InvalidCommandException(
                 sprintf('%s::%s is not a valid method', static::$moduleName, $name)
             );

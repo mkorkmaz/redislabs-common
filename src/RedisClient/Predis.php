@@ -9,11 +9,9 @@ use Predis\ClientInterface as RedisClient;
 
 final class Predis implements RedisClientInterface
 {
-    private $redisClient;
-
-    public function __construct(RedisClient $redisClient)
+    public function __construct(private RedisClient $redisClient)
     {
-        $this->redisClient = $redisClient;
+
     }
 
     public function getClient(): RedisClient
