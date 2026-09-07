@@ -9,6 +9,7 @@ use Redislabs\Interfaces\CommandInterface;
 use Redislabs\Interfaces\RedisClientInterface;
 use Predis\ClientInterface as PredisClient;
 use Redis as PhpRedisClient;
+use RedisCluster as PhpRedisClusterClient;
 use Redislabs\RedisClient\Predis as RedislabsPredisClient;
 use Redislabs\RedisClient\Redis as RedislabsPhpRedisClient;
 
@@ -29,6 +30,12 @@ trait ModuleTrait
     }
 
     final public static function createWithPhpRedis(PhpRedisClient $predisClient): self
+    {
+        return new static(
+            new RedislabsPhpRedisClient($predisClient)
+        );
+    }
+    final public static function createWithPhpRedisCluster(PhpRedisClusterClient $predisClient): self
     {
         return new static(
             new RedislabsPhpRedisClient($predisClient)
