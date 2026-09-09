@@ -11,6 +11,17 @@ use Redislabs\RedisClient\Redis as Adapter;
 
 final class RedisClusterTest extends TestCase
 {
+    public function testModuleFactoryPreservesClusterClientAndRoutesCommands(): void
+    {
+        $client = $this->getMockBuilder(RedisCluster::class)
+            ->disableOriginalConstructor()->onlyMethods(['rawCommand'])->getMock();
+        $client->expects($this->once())->method('rawCommand')
+            ->with('document', 'JSON.GET', 'document', '$')->willReturn('[1]');
+        $module = \Redislabs\Test\Module::createWithPhpRedisCluster($client);
+        self::assertSame($client, $module->getClient());
+        self::assertSame('[1]', $module->raw('JSON.GET', 'document', '$'));
+    }
+
     public function testClusterRoutingPreservesCommandArguments(): void
     {
         $cases = [
