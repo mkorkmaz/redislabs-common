@@ -13,9 +13,7 @@ class CommandTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function shouldGetReturnCommandAndArgumentsSuccessfully(): void
     {
         $command = new Command('param1', 'param2');

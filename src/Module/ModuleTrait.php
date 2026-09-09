@@ -7,7 +7,7 @@ namespace Redislabs\Module;
 use Redislabs\Exceptions\InvalidCommandException;
 use Redislabs\Interfaces\CommandInterface;
 use Redislabs\Interfaces\RedisClientInterface;
-use Predis\ClientInterface as PredisClient;
+use Predis\Client as PredisClient;
 use Redis as PhpRedisClient;
 use RedisCluster as PhpRedisClusterClient;
 use Redislabs\RedisClient\Predis as RedislabsPredisClient;
@@ -15,27 +15,24 @@ use Redislabs\RedisClient\Redis as RedislabsPhpRedisClient;
 
 trait ModuleTrait
 {
-    protected $redisClient;
-
-    public function __construct(RedisClientInterface $redisClient)
+    public function __construct(protected readonly RedisClientInterface $redisClient)
     {
-        $this->redisClient = $redisClient;
     }
 
-    final public static function createWithPredis(PredisClient $predisClient): self
+    final public static function createWithPredis(PredisClient $predisClient): static
     {
         return new static(
             new RedislabsPredisClient($predisClient)
         );
     }
 
-    final public static function createWithPhpRedis(PhpRedisClient $predisClient): self
+    final public static function createWithPhpRedis(PhpRedisClient $predisClient): static
     {
         return new static(
             new RedislabsPhpRedisClient($predisClient)
         );
     }
-    final public static function createWithPhpRedisCluster(PhpRedisClusterClient $predisClient): self
+    final public static function createWithPhpRedisCluster(PhpRedisClusterClient $predisClient): static
     {
         return new static(
             new RedislabsPhpRedisClient($predisClient)
@@ -47,12 +44,12 @@ trait ModuleTrait
         return $this->redisClient->getClient();
     }
 
-    public function raw($command, ...$arguments)
+    public function raw(string $command, mixed ...$arguments): mixed
     {
         return $this->redisClient->rawCommand($command, $arguments);
     }
 
-    final public function runCommand(CommandInterface $command)
+    final public function runCommand(CommandInterface $command): mixed
     {
         $response = $this->redisClient->rawCommand(
             $command->getCommand(),
@@ -69,11 +66,11 @@ trait ModuleTrait
      * Using this magic method enables this library to extend redis clients
      * to use redislabs modules
      */
-    public function __call(string $name, array $arguments)
+    public function __call(string $name, array $arguments): mixed
     {
         $redisClient = $this->redisClient->getClient();
         try {
-            return call_user_func_array([$redisClient, $name], $arguments);
+            return $redisClient->{$name}(...$arguments);
         } catch (\Throwable) {
             throw new InvalidCommandException(
                 sprintf('%s::%s is not a valid method', static::$moduleName, $name)

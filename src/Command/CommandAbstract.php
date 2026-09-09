@@ -6,9 +6,9 @@ namespace Redislabs\Command;
 
 abstract class CommandAbstract
 {
-    protected static $command;
-    protected $arguments;
-    protected $responseCallback;
+    protected static string $command;
+    protected array $arguments = [];
+    protected ?\Closure $responseCallback = null;
 
     final public function getCommand(): string
     {
@@ -25,11 +25,11 @@ abstract class CommandAbstract
         return $this->responseCallback;
     }
 
-    final public static function jsonDecode(?string $jsonData)
+    final public static function jsonDecode(?string $jsonData): mixed
     {
         if ($jsonData === null) {
             return null;
         }
-        return json_decode($jsonData, (bool) JSON_OBJECT_AS_ARRAY, 512, JSON_THROW_ON_ERROR);
+        return json_decode($jsonData, true, 512, JSON_THROW_ON_ERROR);
     }
 }

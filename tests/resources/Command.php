@@ -9,7 +9,8 @@ use Redislabs\Interfaces\CommandInterface;
 
 class Command extends CommandAbstract implements CommandInterface
 {
-    protected static $command = 'SET';
+    #[\Override]
+    protected static string $command = 'SET';
 
     public function __construct()
     {

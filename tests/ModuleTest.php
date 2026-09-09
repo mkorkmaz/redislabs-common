@@ -12,19 +12,16 @@ use Predis;
 
 class ModuleTest extends \Codeception\Test\Unit
 {
-
     /**
      * @var \RedislabsModulesTest\UnitTester
      */
     protected $tester;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function shouldRunCommandOriginalRedisClientsCommandSuccessfully(): void
     {
         $redisClient = new Redis();
-        $redisClient->connect('127.0.0.1');
+        $redisClient->connect('127.0.0.1', (int) (getenv('REDIS_PORT') ?: 6379));
         /**
          * @var Module
          */
@@ -35,12 +32,10 @@ class ModuleTest extends \Codeception\Test\Unit
         $redisClient->flushAll();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function shouldRunCommandOriginalPredisClientsCommandSuccessfully(): void
     {
-        $redisClient = new Predis\Client();
+        $redisClient = new Predis\Client(['port' => (int) (getenv('REDIS_PORT') ?: 6379)]);
         /**
          * @var Module
          */
@@ -51,12 +46,10 @@ class ModuleTest extends \Codeception\Test\Unit
         $redisClient->flushall();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function shouldFailForMagicMethodCall(): void
     {
-        $redisClient = new Predis\Client();
+        $redisClient = new Predis\Client(['port' => (int) (getenv('REDIS_PORT') ?: 6379)]);
         /**
          * @var Module
          */

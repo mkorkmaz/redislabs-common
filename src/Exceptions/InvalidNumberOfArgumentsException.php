@@ -6,5 +6,4 @@ namespace Redislabs\Exceptions;
 
 class InvalidNumberOfArgumentsException extends \InvalidArgumentException
 {
-
 }
